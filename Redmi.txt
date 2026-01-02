@@ -1,0 +1,12 @@
+-------For the BackEnd-------
+
+1- Turn the Apache and MySQL in your XAMPP app.
+2- click the admin button next to the MySQL.
+3- In the DB create a new database called " warshat "
+4- in the terminal run " php artisan migrate "
+5- in the terminal run " php artisan migrate:fresh --seed "
+5- in the terminal run " php artisan serve "\
+
+-------For the FrontEnd-------
+1- in the terminal run " npm install "
+2- in the terminal run " npm run dev "

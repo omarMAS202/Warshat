@@ -1,0 +1,25 @@
+@import "tailwindcss/theme.css";
+@import "tailwindcss/utilities.css";
+
+html,
+body,
+#root,
+button,
+input,
+textarea,
+select {
+  min-height: 100%;
+  margin: 0;
+  font-family: "Cairo", system-ui, -apple-system, "Segoe UI", Roboto, Arial,
+    sans-serif;
+}
+
+/* Fix for browser autofill background on transparent inputs */
+.autofill-transparent:-webkit-autofill,
+.autofill-transparent:-webkit-autofill:hover, 
+.autofill-transparent:-webkit-autofill:focus, 
+.autofill-transparent:-webkit-autofill:active {
+  -webkit-text-fill-color: white !important;
+  transition: background-color 5000s ease-in-out 0s;
+  background-color: transparent !important;
+}
