@@ -34,27 +34,25 @@ class DatabaseSeeder extends Seeder
             'password' => Hash::make('password'),
             'role' => 'client',
             'phone' => '1234567890',
-            'location' => 'Downtown'
+            'location' => 'دمشق'
         ]);
 
         // 2. Create Sections and their Services
         $sections = [
             [
-                'name' => 'House Works',
-                'description' => 'Professional help for your home maintenance and organization.',
+                'name' => 'كهرباء ',
+                'description' => 'يحتوي قسم الكهرباء على كل شيء يتعلق بالأمور الكهربائية مثل: صيانة الأعطال، تمديد الأسلاك، وتركيب الإضاءة والأجهزة.',
                 'services' => [
-                    ['name' => 'Moving', 'description' => 'Help with packing and transporting furniture.'],
-                    ['name' => 'Cleaning', 'description' => 'Deep cleaning services for apartments and houses.'],
-                    ['name' => 'Gardening', 'description' => 'Lawn mowing and garden maintenance.']
+                    ['name' => 'كهرباء منزلية', 'description' => 'حلول سريعة وجذرية لجميع مشاكل التماس الكهربائي، انقطاع التيار، وضعف الجهد في المنزل.'],
+                    ['name' => 'ادوات كهربائية', 'description' => 'إصلاح وصيانة جميع الأجهزة والأدوات الكهربائية المنزلية بدقة عالية مع تشخيص سريع للأعطال.']
                 ]
             ],
             [
-                'name' => 'Repair',
-                'description' => 'Technical support and fixing for appliances and systems.',
+                'name' => 'سباكة',
+                'description' => 'إصلاح التسريبات، تركيب الأدوات الصحية، صيانة شبكات المياه، ومعالجة انسداد الصرف.',
                 'services' => [
-                    ['name' => 'Fix electronic devices', 'description' => 'Repairing phones, laptops, and TVs.'],
-                    ['name' => 'Plumbing', 'description' => 'Fixing leaks and installing pipes.'],
-                    ['name' => 'Electricity', 'description' => 'Wiring and electrical repairs.']
+                    ['name' => 'تركيب أدوات صحية', 'description' => 'تركيب وتغيير المغاسل والخلاطات باحترافية.'],
+                    ['name' => 'إصلاح تسريبات', 'description' => 'كشف وإصلاح تسريبات المياه تحت الأرض وفي الجدران.']
                 ]
             ],
         ];
@@ -66,42 +64,33 @@ class DatabaseSeeder extends Seeder
             $section = Section::create($sectionData);
 
             foreach ($services as $serviceData) {
-                $serviceData['section_id'] = $section->id;
-                Service::create($serviceData);
+                    // إنشاء الخدمة
+                    $service = Service::create([
+                        'section_id' => $section->id,
+                        'name' => $serviceData['name'],
+                        'description' => $serviceData['description']
+                    ]);
             }
-        }
 
         // 3. Create Experts with Profiles
-        $experts = [
-            [
-                'name' => 'Ahmed Repairman',
-                'email' => 'expert1@example.com',
-                'major' => 'Electronics Engineer',
-                'description' => 'I have 10 years of experience in fixing all kinds of digital devices.'
-            ],
-            [
-                'name' => 'Sara Mover',
-                'email' => 'expert2@example.com',
-                'major' => 'Logistics Specialist',
-                'description' => 'Expert in home organization and heavy furniture moving.'
-            ]
-        ];
 
-        foreach ($experts as $data) {
-            $user = User::create([
-                'name' => $data['name'],
-                'email' => $data['email'],
-                'password' => Hash::make('password'),
-                'role' => 'expert',
-                'phone' => '555000' . rand(10, 99),
-                'location' => 'City Center'
-            ]);
+        $expertUser = User::create([
+                    'name' => 'الخبير لخدمة ' . $service->name,
+                    'email' => 'expert_service_' . $service->id . '@example.com',
+                    'password' => Hash::make('password'),
+                    'role' => 'expert',
+                    'phone' => '05' . rand(10000000, 99999999),
+                    'location' => 'دمشق'
+                ]);
 
-            ExpertProfile::create([
-                'user_id' => $user->id,
-                'major' => $data['major'],
-                'description' => $data['description']
-            ]);
+                ExpertProfile::create([
+                    'user_id' => $expertUser->id,
+                    'service_id' => $service->id, // هذا الحقل هو المسؤول عن ظهور الخبير في مصفوفة الخدمة
+                    'major' => 'متخصص ' . $service->name,
+                    'description' => 'خبير فني يمتلك مهارات عالية في مجال ' . $service->name,
+                    'image' => null,
+                    'is_active' => true
+                ]);
         }
     }
 }

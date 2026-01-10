@@ -37,9 +37,21 @@ class ClientController extends Controller
         ], 200);
     }
 
-    public function indexExperts()
+    public function indexExperts(Request $request)
     {
-        $experts = User::where('role', 'expert')->with('expertProfile')->get();
+        $query = User::where('role', 'expert')->with('expertProfile');
+
+        if ($request->has('service_id')) {
+            $serviceId = $request->input('service_id');
+            
+            // Filter users where their expertProfile has the matching service_id
+            $query->whereHas('expertProfile', function ($q) use ($serviceId) {
+                $q->where('service_id', $serviceId);
+            });
+        }
+
+        $experts = $query->get();
+
         return response()->json($experts, 200);
     }
 

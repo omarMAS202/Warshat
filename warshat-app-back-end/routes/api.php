@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\SectionController;
+use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\ExpertController;
 use Illuminate\Support\Facades\Route;
@@ -28,6 +29,9 @@ Route::middleware(['auth:sanctum'])->group(function () {
         // Content
         Route::get('/sections', [SectionController::class, 'index']);
         Route::get('/sections/{section}', [SectionController::class, 'show']);
+
+        // Services
+        Route::get('/services/{id}', [ServiceController::class, 'show']);
     });
 
     // --- EXPERT ROUTES ---

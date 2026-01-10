@@ -26,9 +26,25 @@ class ServiceController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Service $service)
+    public function show($id)
     {
-        //
+        $service = Service::find($id);
+
+        if (!$service) {
+            return response()->json(['message' => 'Service not found'], 404);
+        }
+
+        $experts = \App\Models\User::where('role', 'expert')
+        ->whereHas('expertProfile', function ($query) use ($id) {
+            $query->where('service_id', $id);
+        })
+        ->with('expertProfile') 
+        ->get();
+
+        return response()->json([
+            'service_info' => $service,
+            'experts' => $experts
+        ], 200);
     }
 
     /**
