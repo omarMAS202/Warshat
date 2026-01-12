@@ -157,7 +157,10 @@ export default function SectionServices() {
                     </div>
 
                     <div className="pt-2">
-                      <Button className="w-full bg-gray-900 text-white hover:bg-[#FBB03B] hover:shadow-lg hover:shadow-[#FBB03B]/20 rounded-2xl h-14 font-black transition-all duration-300 group/btn flex items-center justify-between px-6">
+                      <Button
+                        onClick={() => navigate(`/service/${service.id}/experts`)}
+                        className="w-full bg-gray-900 text-white hover:bg-[#FBB03B] hover:shadow-lg hover:shadow-[#FBB03B]/20 rounded-2xl h-14 font-black transition-all duration-300 group/btn flex items-center justify-between px-6"
+                      >
                         <span className="text-base">طلب الخدمة</span>
                         <div className="w-8 h-8 bg-white/10 rounded-xl flex items-center justify-center group-hover/btn:bg-white/20 transition-colors">
                           <ChevronLeft className="w-5 h-5" />

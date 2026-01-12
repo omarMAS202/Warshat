@@ -1,13 +1,21 @@
 import { create } from "zustand"
 import api from "@/lib/api"
 
-type AuthUser = { email: string; name?: string }
+type AuthUser = {
+  id?: number;
+  email: string;
+  name?: string;
+  phone?: string;
+  location?: string;
+  avatar?: string;
+}
 
 type AuthStore = {
   user: AuthUser | null
   isAuthenticated: boolean
   login: (email: string, password: string) => Promise<boolean>
   logout: () => Promise<void>
+  setUser: (user: AuthUser) => void
 }
 
 export const useAuthStore = create<AuthStore>((set) => ({
@@ -20,6 +28,10 @@ export const useAuthStore = create<AuthStore>((set) => ({
     }
   })(),
   isAuthenticated: !!localStorage.getItem("token"),
+  setUser: (user) => {
+    localStorage.setItem("user", JSON.stringify(user))
+    set({ user })
+  },
   login: async (email, password) => {
     try {
       const { data } = await api.post("/login", { email, password })

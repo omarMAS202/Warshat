@@ -4,12 +4,14 @@ import { useAuthStore } from "@/store/useAuthStore";
 import { Button } from "@/components/ui/button";
 import { Menu, X, User, LogOut } from "lucide-react";
 import logo from "@/assets/NAME-PNG-1.png";
+import { ProfileDialog } from "@/components/profile/ProfileDialog";
 
 export default function Navbar() {
   const user = useAuthStore((s) => s.user);
   const navigate = useNavigate();
   const location = useLocation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isProfileOpen, setIsProfileOpen] = useState(false);
 
   const navLinks = [
     { name: "الرئيسية", href: "/home" },
@@ -53,7 +55,10 @@ export default function Navbar() {
           <div className="hidden lg:flex items-center gap-4 justify-self-end shrink-0">
             {user ? (
               <div className="flex items-center gap-5 bg-white py-2.5 px-6 rounded-full border border-gray-200 shadow-sm transition-all hover:shadow-md">
-                <div className="flex items-center gap-3 text-sm font-bold text-gray-700">
+                <div
+                  onClick={() => setIsProfileOpen(true)}
+                  className="flex items-center gap-3 text-sm font-bold text-gray-700 cursor-pointer hover:text-[#FBB03B] transition-colors"
+                >
                   <div className="w-8 h-8 bg-orange-50 rounded-full flex items-center justify-center border border-orange-100">
                     <User className="w-4 h-4 text-[#FBB03B]" />
                   </div>
@@ -127,7 +132,13 @@ export default function Navbar() {
             <div className="pt-6 border-t border-gray-100">
               {user ? (
                 <div className="flex flex-col gap-4">
-                  <div className="flex items-center gap-3 bg-gray-50 p-3 rounded-lg">
+                  <div
+                    onClick={() => {
+                      setIsProfileOpen(true);
+                      setIsMenuOpen(false);
+                    }}
+                    className="flex items-center gap-3 bg-gray-50 p-3 rounded-lg cursor-pointer active:bg-gray-100 transition-colors"
+                  >
                     <div className="w-10 h-10 bg-orange-100 rounded-full flex items-center justify-center text-[#FBB03B]">
                       <User className="w-5 h-5" />
                     </div>
@@ -169,6 +180,10 @@ export default function Navbar() {
           </div>
         )}
       </div>
+      <ProfileDialog
+        isOpen={isProfileOpen}
+        onClose={() => setIsProfileOpen(false)}
+      />
     </header>
   );
 }
