@@ -55,6 +55,22 @@ class DatabaseSeeder extends Seeder
                     ['name' => 'إصلاح تسريبات', 'description' => 'كشف وإصلاح تسريبات المياه تحت الأرض وفي الجدران.']
                 ]
             ],
+            [
+                'name' => 'تنظيف',
+                'description' => 'تنظيف شامل للمنازل، غسيل السجاد والكتب، تنظيف الخزانات، ومكافحة الحشرات.',
+                'services' => [
+                    ['name' => 'تنظيف منازل', 'description' => 'تنظيف شامل للمنازل، غسيل السجاد والكتب، تنظيف الخزانات، ومكافحة الحشرات.'],
+                    ['name' => 'تنظيف مكاتب', 'description' => 'تنظيف شامل للمكاتب، غسيل السجاد والكتب، تنظيف الخزانات، ومكافحة الحشرات.']
+                ]
+            ],
+            [
+                'name' => 'نجارة',
+                'description' => 'تصنيع وصيانة الأثاث، تركيب الأبواب والنوافذ، إصلاح المطابخ، وأعمال الديكور الخشبي',
+                'services' => [
+                    ['name' => 'تصنيع أثاث', 'description' => 'تصنيع وصيانة الأثاث بجودة عالية.'],
+                    ['name' => 'تركيب أبواب', 'description' => 'تركيب الأبواب والنوافذ بجودة عالية.']
+                ]
+            ]
         ];
 
         foreach ($sections as $sectionData) {
@@ -75,7 +91,7 @@ class DatabaseSeeder extends Seeder
         // 3. Create Experts with Profiles
 
         $expertUser = User::create([
-                    'name' => 'الخبير لخدمة ' . $service->name,
+                    'name' => 'احمد محمد' . $service->name,
                     'email' => 'expert_service_' . $service->id . '@example.com',
                     'password' => Hash::make('password'),
                     'role' => 'expert',
