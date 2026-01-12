@@ -6,10 +6,13 @@ export interface ExpertProfile {
     user_id: number;
     service_id: number;
     bio: string | null;
+    description: string | null;
+    major: string | null;
     rating: number;
     hourly_rate: number;
     experience_years: number;
     availability: string;
+    is_active: boolean;
 }
 
 export interface Expert {

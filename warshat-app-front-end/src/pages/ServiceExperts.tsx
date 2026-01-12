@@ -1,23 +1,22 @@
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import PageFade from "@/components/ui/PageFade";
-import { useExpertsStore } from "@/store/useExpertsStore";
-import { useEffect } from "react";
+import { useExpertsStore, type Expert } from "@/store/useExpertsStore";
+import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Loader2, Star, MapPin, ArrowRight, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import ExpertProfileDialog from "@/components/experts/ExpertProfileDialog";
 
 export default function ServiceExperts() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const {
-    experts,
-    service,
-    loading,
-    error,
-    fetchServiceWithExperts,
-  } = useExpertsStore();
+  const { experts, service, loading, error, fetchServiceWithExperts } =
+    useExpertsStore();
+
+  const [selectedExpert, setSelectedExpert] = useState<Expert | null>(null);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   const serviceId = Number(id);
 
@@ -26,6 +25,11 @@ export default function ServiceExperts() {
       fetchServiceWithExperts(serviceId);
     }
   }, [serviceId, fetchServiceWithExperts]);
+
+  const handleShowMore = (expert: Expert) => {
+    setSelectedExpert(expert);
+    setIsDialogOpen(true);
+  };
 
   if (loading) {
     return (
@@ -61,7 +65,7 @@ export default function ServiceExperts() {
               <ArrowRight className="w-4 h-4" />
               <span>عودة</span>
             </button>
-            
+
             <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
               خبراء {service?.name || "الخدمة"}
             </h1>
@@ -114,24 +118,53 @@ export default function ServiceExperts() {
                         <span>{expert.location}</span>
                       </div>
                     )}
-                    
-                    <p className="text-gray-600 text-sm line-clamp-2 min-h-[2.5rem]">
-                      {expert.expert_profile?.bio || "لا يوجد نبذة تعريفية"}
-                    </p>
 
                     <div className="flex items-center gap-2 pt-2">
-                      <Badge variant="secondary" className="bg-blue-50 text-blue-600 hover:bg-blue-100">
-                        {expert.expert_profile?.experience_years || 0} سنوات خبرة
+                      <Badge
+                        variant="secondary"
+                        className="bg-blue-50 text-blue-600 hover:bg-blue-100"
+                      >
+                        {expert.expert_profile?.experience_years || 0} سنوات
+                        خبرة
                       </Badge>
-                      <Badge variant="outline" className="border-[#FBB03B] text-[#FBB03B]">
+                      <Badge
+                        variant="outline"
+                        className="border-[#FBB03B] text-[#FBB03B]"
+                      >
                         {expert.expert_profile?.hourly_rate || 0} ر.س/ساعة
                       </Badge>
                     </div>
+
+                    <div className="flex items-center gap-2 mt-3">
+                      {expert.expert_profile?.is_active ? (
+                        <div className="flex items-center gap-1.5 text-green-600 bg-green-50 px-3 py-1 rounded-full text-xs font-bold">
+                          <span className="relative flex h-2 w-2">
+                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                            <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+                          </span>
+                          متاح اليوم
+                        </div>
+                      ) : (
+                        <div className="flex items-center gap-1.5 text-red-500 bg-red-50 px-3 py-1 rounded-full text-xs font-bold">
+                          <span className="h-2 w-2 rounded-full bg-red-500"></span>
+                          غير متاح
+                        </div>
+                      )}
+                    </div>
                   </div>
 
-                  <Button className="w-full bg-gray-900 hover:bg-[#FBB03B] text-white rounded-xl h-12 font-bold transition-all shadow-lg shadow-gray-200 hover:shadow-[#FBB03B]/20">
-                    اختيار الفني
-                  </Button>
+                  <div className="flex gap-3">
+                    <Button className="flex-1 bg-gray-900 hover:bg-[#FBB03B] text-white rounded-xl h-12 font-bold transition-all shadow-lg shadow-gray-200 hover:shadow-[#FBB03B]/20">
+                      حجز موعد
+                    </Button>
+                    <Button
+                      onClick={() => handleShowMore(expert)}
+                      variant="outline"
+                      className="flex-1 border-2 border-gray-200 hover:border-[#FBB03B] text-gray-700 hover:text-[#FBB03B] rounded-xl h-12 font-bold transition-all"
+                    >
+                      عرض المزيد
+                    </Button>
+                  </div>
                 </div>
               ))}
             </div>
@@ -148,6 +181,11 @@ export default function ServiceExperts() {
           )}
         </div>
       </PageFade>
+      <ExpertProfileDialog
+        isOpen={isDialogOpen}
+        onClose={() => setIsDialogOpen(false)}
+        expert={selectedExpert}
+      />
       <Footer />
     </div>
   );
