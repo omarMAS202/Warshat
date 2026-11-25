@@ -1,0 +1,27 @@
+# Operating system and editor files
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Local environment and secrets
+.env
+.env.*
+!.env.example
+
+# Node.js generated files
+node_modules/
+dist/
+dist-ssr/
+npm-debug.log*
+
+# PHP / Laravel generated files
+vendor/
+.phpunit.result.cache
+.phpunit.cache/
+/storage/*.key
+/public/build/
+/public/hot
+/public/storage
