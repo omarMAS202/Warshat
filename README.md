@@ -56,6 +56,45 @@ The repository is a **monorepo** containing two applications:
 
 > **Current scope:** The API routes currently cover authentication, client and expert profiles, service-section browsing, service details, and expert discovery. Booking, appointment scheduling, and payment APIs are not present in the current route definitions and are not represented as implemented features.
 
+## Application Screenshots
+
+The screenshots below show the current Arabic, right-to-left client experience, from authentication and service discovery to expert browsing and profile details.
+
+<table>
+  <tr>
+    <td width="50%" align="center">
+      <strong>Sign In</strong><br />
+      <img src="docs/screenshots/01-login.png" alt="Warshat sign-in page" width="100%" />
+    </td>
+    <td width="50%" align="center">
+      <strong>Home</strong><br />
+      <img src="docs/screenshots/02-home.png" alt="Warshat home page" width="100%" />
+    </td>
+  </tr>
+  <tr>
+    <td width="50%" align="center">
+      <strong>Service Categories</strong><br />
+      <img src="docs/screenshots/03-service-categories.png" alt="Warshat service categories" width="100%" />
+    </td>
+    <td width="50%" align="center">
+      <strong>Services</strong><br />
+      <img src="docs/screenshots/04-services.png" alt="Warshat service listing" width="100%" />
+    </td>
+  </tr>
+  <tr>
+    <td width="50%" align="center">
+      <strong>Expert Discovery</strong><br />
+      <img src="docs/screenshots/05-expert-listing.png" alt="Warshat experts for a selected service" width="100%" />
+    </td>
+    <td width="50%" align="center">
+      <strong>Expert Profile</strong><br />
+      <img src="docs/screenshots/06-expert-profile.png" alt="Warshat expert profile details" width="100%" />
+    </td>
+  </tr>
+</table>
+
+> The expert-profile screenshot has its displayed phone number hidden before publication.
+
 ## Architecture
 
 ```mermaid
@@ -79,7 +118,14 @@ During local development, the Vite development server proxies `/api` requests to
 Warshat/
 ├── README.md
 ├── docs/
-│   └── functional-requirements.md
+│   ├── functional-requirements.md
+│   └── screenshots/
+│       ├── 01-login.png
+│       ├── 02-home.png
+│       ├── 03-service-categories.png
+│       ├── 04-services.png
+│       ├── 05-expert-listing.png
+│       └── 06-expert-profile.png
 ├── warshat-app-back-end/
 │   ├── app/
 │   │   ├── Http/Controllers/
