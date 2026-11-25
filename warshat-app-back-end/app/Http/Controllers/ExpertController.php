@@ -7,9 +7,11 @@ use Illuminate\Http\Request;
 class ExpertController extends Controller
 {
     public function profile(Request $request)
-    {
-        return response()->json($request->user(), 200)->load('expertProfile');
-    }
+{
+    $user = $request->user()->load('expertProfile');
+
+    return response()->json($user, 200);
+}
 
     public function updateProfile(Request $request)
     {
